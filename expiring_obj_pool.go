@@ -34,9 +34,10 @@ type ExpiringObjectPool struct {
 	// ExpiryTime stores the amount of milliseconds that an object is valid for
 	ExpiryPeriod uint64
 
-	//
+	// Sem is the semaphore removeExpiredItems waits on to remove ...well ...expired items
 	Sem *semaphore.CountingSemaphore
 
+	// Mutex is used to synchronise methods as state of list is being altered
 	Mutex sync.Mutex
 }
 
