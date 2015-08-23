@@ -75,8 +75,8 @@ func (this *ExpiringObjectPool) Retrieve() (interface{}, bool) {
 	}
 }
 
-// removeExpired 
-func (this *ExpiringObjectPool) removedExpiredItems() {
+// removeExpiredItems removes items in the list that have expired
+func (this *ExpiringObjectPool) removeExpiredItems() {
 	for {
 		
 		// It'll sit here until Unlock is called from Add method
@@ -116,6 +116,6 @@ func (this *ExpiringObjectPool) removedExpiredItems() {
 // NewTimedExiryPool creates a ...NewTimedExiryPool
 func NewTimedExiryPool(expiryTimeInMilli uint64) (*ExpiringObjectPool) {
 	tep := &ExpiringObjectPool{ LinkedList: list.New(), ExpiryPeriod: expiryTimeInMilli, Sem: semaphore.New() }
-	go tep.removedExpiredItems()
+	go tep.removeExpiredItems()
 	return tep
 }
